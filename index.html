@@ -47,7 +47,7 @@
 .map-overlay .legend .bar {
     height: 10px;
     width: 100%;
-    background: linear-gradient(to right, #ffffcc, #225ea8);
+    background: linear-gradient(to right, #ffffb2, #b10026);
 }
 
 .map-overlay input {
@@ -69,7 +69,7 @@
 
 <div class='map-overlay top'>
     <div class='map-overlay-inner'>
-        <h2>Earthquakes between 1984 - 2011</h2>
+        <h2>Earthquakes between 1984 - 2018</h2>
         <div id='current-depth'></div>
         <label id='slider-depth'></label>
         <input id='slider' type='range' min='0' max='30' step='1' value='0' />
@@ -84,7 +84,7 @@
 
 <div id='menu'>
     <input id='dark' type='radio' name='rtoggle' value='dark'>
-    <label for='dark'>darkish</label>
+    <label for='dark'>dark</label>
     <input id='satellite' type='radio' name='rtoggle' value='satellite'>
     <label for='satellite'>satellite</label>
 </div>
@@ -110,9 +110,9 @@ function filterBy(depth) {
     var filter3 = ['>', 'DEP', generalDepth];
 
     if (generalDepth < 29) {
-    	map.setFilter('NCAeqDD_v2011', ['all', filter1, filter2]);
+    	map.setFilter('NCAeqDD_1984_2018', ['all', filter1, filter2]);
     } else {
-    	map.setFilter('NCAeqDD_v2011', ['all', filter3]);
+    	map.setFilter('NCAeqDD_1984_2018', ['all', filter3]);
     }
     
 
@@ -129,25 +129,26 @@ var map = new mapboxgl.Map({
 
 map.on('style.load', function() {
     map.addLayer({
-      'id': 'NCAeqDD_v2011',
+      'id': 'NCAeqDD_1984_2018',
       'type': 'circle',
       'source': {
           type: 'vector',
-          url: 'mapbox://bmelosh.9n96lt3p'
+          url: 'mapbox://bmelosh.60wrl5js'
       },
-      'source-layer': 'NCAeqDD_v2011', 
+      'source-layer': 'NCAeqDD_1984_2018', 
       'paint':{
-        'circle-radius': ['*', ['to-number', ['get', 'MAG']], 2], 
+        'circle-radius': ['*', ['to-number', ['get', 'MAG']], 3], 
         'circle-opacity':1, 
         'circle-color':[
           "step", ["number", ["get", "DEP"]], 
           "#000000",
-          0, '#ffffcc',
-          5, "#c7e9b4",
-          10, "#7fcdbb",
-          15, "#41b6c4",
-          20, "#1d91c0",
-          25, "#225ea8"
+          0, '#ffffb2',
+          5, "#fed976",
+          10, "#feb24c",
+          15, "#fd8d3c",
+          20, "#fc4e2a",
+          25, "#e31a1c",
+          30, "#b10026"
         ],
         'circle-stroke-color': 'rgba(0, 0, 0, 0.71)',
         'circle-stroke-width': 0.5,
@@ -206,11 +207,11 @@ map.on('style.load', function() {
         closeOnClick: false
     });
 
-    map.on('mouseenter', 'NCAeqDD_v2011', function() {
+    map.on('mouseenter', 'NCAeqDD_1984_2018', function() {
         map.getCanvas().style.cursor = 'pointer';
     });
 
-    map.on('click', 'NCAeqDD_v2011', function(e) {
+    map.on('click', 'NCAeqDD_1984_2018', function(e) {
 
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
@@ -228,12 +229,12 @@ map.on('style.load', function() {
         // Populate the popup and set its coordinates
         // based on the feature found.
         popup.setLngLat(e.features[0].geometry.coordinates)
-            .setHTML('<h4>' + 'Magnitude: ' + e.features[0].properties.MAG + '</h4><h4>' + 'Depth: ' + e.features[0].properties.DEP +'</h4><h4>' + 'Year: ' + e.features[0].properties.DATE + '</h4>' )
+            .setHTML('<h4>' + 'Magnitude: ' + e.features[0].properties.MAG + '</h4><h4>' + 'Depth: ' + e.features[0].properties.DEP +'</h4><h4>' + 'Year: ' + e.features[0].properties.YEAR + '</h4>' )
             .setLngLat(e.features[0].geometry.coordinates)
             .addTo(map);
     });
 
-    map.on('mouseleave', 'NCAeqDD_v2011', function() {
+    map.on('mouseleave', 'NCAeqDD_1984_2018', function() {
         map.getCanvas().style.cursor = '';
         popup.remove();
     });
