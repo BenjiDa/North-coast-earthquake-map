@@ -110,7 +110,7 @@
         <h2>Earthquakes between 1984 - 2018</h2>
         <div id='current-depth'></div>
         <label id='slider-depth'></label>
-        <input id='slider' type='range' min='0' max='30' step='1' value='0' />
+        <input id='slider' type='range' min='0.0' max='29' step='0.5' value='0.0' />
     
     <!-- <div class='map-overlay-inner'> --> 
         <div id='legend' class='legend'>
@@ -141,7 +141,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYm1lbG9zaCIsImEiOiJjamw0N2lnenYwNTd1M2tubHNne
 
 var createArray = function count(){
   var arr = [];
-  for(var count=0;count<30;count++){
+  for(var count=0;count<30;count+=0.5){
     arr.push(count);
   }
   return arr
@@ -150,8 +150,8 @@ var depths = createArray;
 
 function filterBy(depth) {
 
-    var generalDepth = parseInt(depth);
-    var max = depth < 29 ? generalDepth+1 : generalDepth;
+    var generalDepth = parseFloat(depth);
+    var max = depth < 29 ? generalDepth+0.5 : generalDepth;
     //how to get max of an array: Math.max(...depth);
     var filter1 = ['>=', 'DEP', generalDepth];
     var filter2 = ['<=', 'DEP', max];
@@ -162,7 +162,6 @@ function filterBy(depth) {
     } else {
     	map.setFilter('NCAeqDD_1984_2018', ['all', filter3]);
     }
-    
 
     // Set the label to the depth
     document.getElementById('slider-depth').textContent = depths[depth];
@@ -291,8 +290,10 @@ map.on('style.load', function() {
     // 0 = 0
     filterBy(0);
 
+    // Set the label to the depth
+    
     document.getElementById('slider').addEventListener('input', function(e) {
-        var depth = parseInt(e.target.value);
+        var depth = parseFloat(e.target.value);
         document.getElementById('current-depth').innerHTML = depth;
         filterBy(depth);
     });
