@@ -158,9 +158,9 @@ function filterBy(depth) {
     var filter3 = ['>', 'DEP', generalDepth];
 
     if (generalDepth < 29) {
-    	map.setFilter('NCAeqDD_1984_2018', ['all', filter1, filter2]);
+    	map.setFilter('test', ['all', filter1, filter2]);
     } else {
-    	map.setFilter('NCAeqDD_1984_2018', ['all', filter3]);
+    	map.setFilter('test', ['all', filter3]);
     }
 
     // Set the label to the depth
@@ -176,13 +176,13 @@ var map = new mapboxgl.Map({
 
 map.on('style.load', function() {
     map.addLayer({
-      'id': 'NCAeqDD_1984_2018',
+      'id': 'test',
       'type': 'circle',
       'source': {
           type: 'vector',
           url: 'mapbox://bmelosh.60wrl5js'
       },
-      'source-layer': 'NCAeqDD_1984_2018', 
+      'source-layer': 'test', 
       'paint':{
         'circle-radius': ['*', ['to-number', ['get', 'MAG']], 3], 
         'circle-opacity':1, 
@@ -254,11 +254,11 @@ map.on('style.load', function() {
         closeOnClick: false
     });
 
-    map.on('mouseenter', 'NCAeqDD_1984_2018', function() {
+    map.on('mouseenter', 'test', function() {
         map.getCanvas().style.cursor = 'pointer';
     });
 
-    map.on('click', 'NCAeqDD_1984_2018', function(e) {
+    map.on('click', 'test', function(e) {
 
         // Change the cursor style as a UI indicator.
         map.getCanvas().style.cursor = 'pointer';
@@ -281,7 +281,7 @@ map.on('style.load', function() {
             .addTo(map);
     });
 
-    map.on('mouseleave', 'NCAeqDD_1984_2018', function() {
+    map.on('mouseleave', 'test', function() {
         map.getCanvas().style.cursor = '';
         popup.remove();
     });
