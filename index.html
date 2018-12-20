@@ -6,6 +6,7 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
+    <link href='./style.css' rel='stylesheet' />
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -14,114 +15,27 @@
 
 <body>
 
-<style>
-
-#menu {
-    position: absolute;
-    background: rgba(0,0,0,0.6);
-    padding: 25px;
-    font-family: 'Open Sans', sans-serif;
-    margin: 0px 0px 0px 0px;
-    color: white;
-}
-
-#menu input {
-	display:inline;
-}
-
-#menu a{
-	color:white;
-}
-
-
-.credit-overlay{
-	font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-	background: rgba(0,0,0,0.6);
-	position:absolute;
-	color: white;
-	padding: 10px;
-	top:0px;
-	right:0px;
-
-}
-.credit-overlay a{
-	color:white;
-	font: 20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-	text-decoration: none;
-}
-.credit-overlay a:hover{
-    color: #4eb3d3;
-}
-
-.map-overlay {
-  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  position: absolute;
-  width: 10%;
-  margin-top:75px;
-  margin-left: 25px;
-  top: 0;
-  left: 0;
-  padding: 10px;
-
-}
-
-.map-overlay .map-overlay-inner {
-    background-color: rgba(0,0,0,0.6);
-    /*box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);*/
-    padding: 5px 10px;
-    margin: 10px 0px 0px 0px;
-    color: white;
-}
-
-.map-overlay h1 {
-    line-height: 24px;
-    display: block;
-    margin: 0 0 10px;
-}
-
-.map-overlay .legend .bar {
-    height: 10px;
-    width: 100%;
-    background: linear-gradient(to right, #ffffb2, #b10026);
-}
-
-.map-overlay input {
-    background-color: transparent;
-    display: inline-block;
-    width: 100%;
-    position: relative;
-    margin: 0;
-    cursor: ew-resize;
-}
-
-.mapboxgl-popup {
-    max-width: 400px;
-    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-}
-
-</style>
-
 <div id='map'></div>
-
 
 
 <div class='map-overlay top'>
     <div class='map-overlay-inner'>
         <h2>Earthquakes between 1984 - 2018</h2>
-        <div id='current-depth'></div>
-        <label id='slider-depth'></label>
-        <input id='slider' type='range' min='0.0' max='29' step='0.5' value='0.0' />
-    
-    <!-- <div class='map-overlay-inner'> --> 
-        <div id='legend' class='legend'>
-            <div class='bar'></div>
-            <div>Depth (km) </div>
+        <div id='current-date'></div>
+        <label id='slider-date'></label>
+        <div id="time-range">
+            <p>Time Range: <span class="slider-time"></span> - <span id="slider-time2"></span>
+            </p>
+            
+            <div class="sliders_step1">
+                <div id="slider-range"></div>
+            </div>
         </div>
     </div>
 </div>
 
 <div id='menu'>
-	<input id='hillshade' type="radio" name='rtoggle' value='hillshade' checked='checked'>
+  <input id='hillshade' type="radio" name='rtoggle' value='hillshade' checked='checked'>
     <label for='hillshade'>hillshade</label>
     <input id='dark' type='radio' name='rtoggle' value='dark'>
     <label for='dark'>dark</label>
@@ -130,42 +44,27 @@
 </div>
 
 <div class='credit-overlay'>
-	<div class='map-overlay-inner'>
-	</div>
-	<a href='./credits.html' class='button fill-darken2'>Credits</a>
+  <div class='map-overlay-inner'>
+  </div>
+  <a href='./credits.html' class='button fill-darken2'>Credits</a>
 </div>
 
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoiYm1lbG9zaCIsImEiOiJjamw0N2lnenYwNTd1M2tubHNneG0ydHFpIn0.MxTNGVxi4sJytIpjajrHCg';
 
 var createArray = function count(){
   var arr = [];
-  for(var count=0;count<30;count+=0.5){
+  for(var count=0;count<707672;count++){
     arr.push(count);
   }
   return arr
 }
-var depths = createArray;
 
-function filterBy(depth) {
+var dates = createArray;
 
-    var generalDepth = parseFloat(depth);
-    var max = depth < 29 ? generalDepth+0.5 : generalDepth;
-    //how to get max of an array: Math.max(...depth);
-    var filter1 = ['>=', 'DEP', generalDepth];
-    var filter2 = ['<=', 'DEP', max];
-    var filter3 = ['>', 'DEP', generalDepth];
 
-    if (generalDepth < 29) {
-    	map.setFilter('test', ['all', filter1, filter2]);
-    } else {
-    	map.setFilter('test', ['all', filter3]);
-    }
-
-    // Set the label to the depth
-    document.getElementById('slider-depth').textContent = depths[depth];
-}
 
 var map = new mapboxgl.Map({
     container: 'map',
@@ -173,6 +72,7 @@ var map = new mapboxgl.Map({
     zoom: 8.6,
     center: [-122.5, 38.5]
 });
+
 
 map.on('style.load', function() {
     map.addLayer({
@@ -189,13 +89,27 @@ map.on('style.load', function() {
         'circle-color':[
           "step", ["number", ["get", "DEP"]], 
           "#000000",
-          0, '#ffffb2',
-          5, "#fed976",
-          10, "#feb24c",
-          15, "#fd8d3c",
-          20, "#fc4e2a",
-          25, "#e31a1c",
-          30, "#b10026"
+          0, '#66ffff',
+          1, "#61f2ff",
+          2, "#5ce6ff",
+          3, "#57d9ff",
+          4, "#52ccff",
+          5, "#4cbfff",
+          6, "#47b2ff",
+          7, "#42a6ff",
+          8, "#3d99ff",
+          9, "#388cff",
+          10, "#3380ff",
+          11, "#2e73ff",
+          12, "#2966ff",
+          13, "#2459ff",
+          14, "#1f4dff",
+          15, "#1a40ff",
+          16, "#1433ff",
+          17, "#0f26ff",
+          18, "#0a19ff",
+          19, "#050dff",
+          20, "#0000cc"
         ],
         'circle-stroke-color': 'rgba(0, 0, 0, 0.71)',
         'circle-stroke-width': 0.5,
@@ -276,7 +190,7 @@ map.on('style.load', function() {
         // Populate the popup and set its coordinates
         // based on the feature found.
         popup.setLngLat(e.features[0].geometry.coordinates)
-            .setHTML('<h4>' + 'Magnitude: ' + e.features[0].properties.MAG + '</h4><h4>' + 'Depth: ' + e.features[0].properties.DEP +'</h4><h4>' + 'Year: ' + e.features[0].properties.YEAR + '</h4>' )
+            .setHTML('<h4>' + 'Magnitude: ' + e.features[0].properties.MAG + ' Mw' + '</h4><h4>' + 'Depth: ' + e.features[0].properties.DEP + ' km' + '</h4><h4>' + 'Date: ' + e.features[0].properties.MONTH + '/' + e.features[0].properties.DAY + '/' + e.features[0].properties.YEAR + '</h4>' )
             .setLngLat(e.features[0].geometry.coordinates)
             .addTo(map);
     });
@@ -286,17 +200,68 @@ map.on('style.load', function() {
         popup.remove();
     });
 
-    // Set filter to first depth value 
-    // 0 = 0
-    filterBy(0);
+    // Set filter to first date value 
+function filterBy(startDate, endDate) {
+    stringifiedendDate = endDate.toString();
+    var endYear = stringifiedendDate.substr(0,4);
+    var endMonth = stringifiedendDate.substr(5,2);
+    var endDay = stringifiedendDate.substr(8,2);
 
-    // Set the label to the depth
+    stringifiedstartDate = startDate.toString();
+    var startYear = stringifiedstartDate.substr(0,4);
+    var startMonth = stringifiedstartDate.substr(5,2);
+    var startDay = stringifiedstartDate.substr(8,2);
+
+    const startNum = parseInt(startYear + startMonth+startDay);
+    const endNum = parseInt(endYear+endMonth+endDay);
+
+    var filterStart = ['>', 'DATE', startNum];
+    var filterEnd = ['<', 'DATE', endNum];
     
-    document.getElementById('slider').addEventListener('input', function(e) {
-        var depth = parseFloat(e.target.value);
-        document.getElementById('current-depth').innerHTML = depth;
-        filterBy(depth);
-    });
+    map.setFilter('test', ['all', filterStart, filterEnd]);
+
+}
+var dt_from = "1984/01/01";
+var dt_to = "2018/10/24";
+
+$('.slider-time').html(dt_from);
+$('#slider-time2').html(dt_to);
+var min_val = Date.parse(dt_from)/1000;
+var max_val = Date.parse(dt_to)/1000;
+
+function zeroPad(num, places) {
+  var zero = places - num.toString().length + 1;
+  return Array(+(zero > 0 && zero)).join("0") + num;
+}
+function formatDT(__dt) {
+    var year = __dt.getFullYear();
+    var month = zeroPad(__dt.getMonth()+1, 2);
+    var date = zeroPad(__dt.getDate(), 2);
+    var hours = zeroPad(__dt.getHours(), 2);
+    var minutes = zeroPad(__dt.getMinutes(), 2);
+    var seconds = zeroPad(__dt.getSeconds(), 2);
+    return year + '-' + month + '-' + date;
+};
+
+
+  $("#slider-range").slider({
+    range: true,
+    min: min_val,
+    max: max_val,
+    step: 1000,
+    values: [min_val, max_val],
+    slide: function (e, ui) {
+        var dt_cur_from = new Date(ui.values[0]*1000); //.format("yyyy-mm-dd hh:ii:ss");
+        $('.slider-time').html(formatDT(dt_cur_from));
+
+        var dt_cur_to = new Date(ui.values[1]*1000); //.format("yyyy-mm-dd hh:ii:ss");    
+
+        filterBy(formatDT(dt_cur_from), formatDT(dt_cur_to));
+
+        $('#slider-time2').html(formatDT(dt_cur_to));
+    }
+  });
+
 });
 
 // Create a popup, but don't add it to the map yet.
@@ -309,14 +274,11 @@ var layerList = document.getElementById('menu');
 var inputs = layerList.getElementsByTagName('input');
 
 function switchLayer(layer) {
-    console.log('layer from input', layer);
-
-    var layerId = layer.target.id;
-    map.setStyle('mapbox://styles/mapbox/' + layerId + '-v9');
-    if (layerId == 'hillshade') {
-    	map.setStyle('mapbox://styles/bmelosh/cjlcsa3ct41wl2slu5mnwgo8m')
-    };
-
+  var layerId = layer.target.id;
+  map.setStyle('mapbox://styles/mapbox/' + layerId + '-v9');
+  if (layerId == 'hillshade') {
+    map.setStyle('mapbox://styles/bmelosh/cjlcsa3ct41wl2slu5mnwgo8m')
+  };
 }
 
 for (var i = 0; i < inputs.length; i++) {
@@ -325,6 +287,5 @@ for (var i = 0; i < inputs.length; i++) {
 
 
 </script>
-
 </body>
 </html>
