@@ -1,0 +1,82 @@
+@media screen and (min-width: 800px) {
+	.mapboxgl-ctrl-group,
+	.wfLogo,
+	.logos-foot {
+		display: none
+	}
+	.w320-ml {
+		width: 320px!important
+	}
+}
+
+@media screen and (max-width: 799px) {
+	.logos {
+		display: none
+	}
+}
+
+.sidebar {
+	overflow-x: hidden;
+    overflow-y: auto;
+    /*-webkit-overflow-scrolling: touch;*/
+    line-height: 14px;
+}
+
+.logos,
+.logos-foot {
+	margin-left: auto;
+	margin-right: auto
+}
+
+.ui-slider {
+	background: rgba(224, 224, 224, 0.7);
+	margin-left: 10px;
+	margin-right: 10px;
+	height: 4px;
+	border: none;
+}
+
+.ui-slider .ui-slider-range {
+	background: #448ee4!important;
+}
+
+.ui-slider-handle {
+	background: #448ee4!important;
+	letter-spacing: 0px;
+	border-radius: 50%;
+	cursor: pointer!important;
+	border: 2px solid white !important;
+}
+
+.ui-slider .ui-slider-handle {
+	width: 12px;
+	height: 12px;
+	ms-touch-action: none;
+	padding: 6px;
+	top: -6px
+}
+
+.ui-slider-horizontal .ui-slider-handle {
+	margin-left: -.4em;
+}
+
+.slideFilt {
+	opacity: 1;
+	pointer-events: auto
+}
+
+.active {
+	opacity: 1.0 !important
+}
+
+
+#mouseCoord {
+	position: absolute;
+	left: 50%;
+	margin-left: -80px;
+	bottom: 5px;
+	z-index: 2;
+	color: white;
+	font-family: 'Open Sans', sans-serif;
+	background-color: rgba(0, 0, 0, 0.3);
+}
