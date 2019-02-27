@@ -120,6 +120,10 @@ map.on('style.load', function() {
         map.getCanvas().style.cursor = 'pointer';
     });
 
+    map.on('mouseenter', 'qfaults-306owm', function() {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
     map.on('click', 'test', function(e) {
 
         // Change the cursor style as a UI indicator.
@@ -143,10 +147,34 @@ map.on('style.load', function() {
             .addTo(map);
     });
 
-    map.on('mouseleave', 'test', function() {
-        map.getCanvas().style.cursor = '';
-        popup.remove();
+    map.on('click', 'qfaults-306owm', function(e) {
+
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+
+        // new mapboxgl.Popup()
+        popup.setLngLat(e.lngLat)
+            .setHTML('<h4>' + e.features[0].properties.faultname + '</h4>' + '<h4>' + 'Age: ' + e.features[0].properties.age + '</h4>' + '<h4>' + 'Slip rate: ' + e.features[0].properties.sliprate + '</h4>' + '<h4>' + 'Slip sense: ' + e.features[0].properties.slipsense + '</h4>')
+            .addTo(map);
+
+        console.log(e.features[0])
+
+
     });
+
+    map.on('mouseleave', 'qfaults-306owm', function() {
+          map.getCanvas().style.cursor = '';
+          popup.remove();
+        });
+
+    
+
+    
+
+
+    
+
+
 
 
     // Set filter to first date value 
@@ -193,7 +221,7 @@ function formatDT(__dt) {
 };
 
 
-  $("#slider-range").slider({
+  $("#eqSlider").slider({
     range: true,
     min: min_val,
     max: max_val,
@@ -224,17 +252,17 @@ function formatDT(__dt) {
     }
   })
 
-  map.on("mousemove", function(event) {
-    // var pageCoords = "(" + event.pageX + ", " + event.pageY + " )";
-    // $('#mouseCoord').text(pageCoords);
+  // map.on("mousemove", function(event) {
+  //   // var pageCoords = "(" + event.pageX + ", " + event.pageY + " )";
+  //   // $('#mouseCoord').text(pageCoords);
 
-    document.getElementById('info').innerHTML = 
-      console.log(JSON.stringify(event.lngLat))
-      $('#mouseCoord').text(event.lngLat)
-      // JSON.stringify(event.lngLat);
+  //   document.getElementById('info').innerHTML = 
+  //     console.log(JSON.stringify(event.lngLat))
+  //     $('#mouseCoord').text(event.lngLat)
+  //     // JSON.stringify(event.lngLat);
 
-    // $('#mouseCoord').text(JSON.stringify(event.lngLat));
-  })
+  //   // $('#mouseCoord').text(JSON.stringify(event.lngLat));
+  // })
 
 
 });

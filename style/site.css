@@ -28,6 +28,43 @@
 	margin-right: auto
 }
 
+.logos * img,
+.logos-foot * img {
+	opacity: 0.5;
+	cursor: pointer;
+	-webkit-transition: all 0.25s;
+	transition: all 0.25s;
+}
+
+.logos * img:hover,
+.logos-foot * img:hover {
+	opacity: 0.85;
+}
+
+
+.logos-foot > * img {
+	max-width: 28%;
+	height: 100%
+}
+
+
+.wfLogoMain {
+	height: 80px;
+	width: 60px;
+	margin-top: 20px;
+	opacity: 0.75;
+	-webkit-transition: all 0.25s;
+	transition: all 0.25s;
+}
+
+
+.wfLogoMain:hover {
+	opacity: 1.0
+}
+
+
+/*Slider styles*/
+
 .ui-slider {
 	background: rgba(224, 224, 224, 0.7);
 	margin-left: 10px;
@@ -36,8 +73,9 @@
 	border: none;
 }
 
-.ui-slider .ui-slider-range {
+.ui-slider-range {
 	background: #448ee4!important;
+
 }
 
 .ui-slider-handle {
@@ -53,21 +91,29 @@
 	height: 12px;
 	ms-touch-action: none;
 	padding: 6px;
-	top: -6px
+	top: -6px;
 }
 
 .ui-slider-horizontal .ui-slider-handle {
 	margin-left: -.4em;
 }
 
+.ui-slider-handle:focus {
+	outline: none
+}
+
+
+
 .slideFilt {
 	opacity: 1;
 	pointer-events: auto
 }
 
-.active {
-	opacity: 1.0 !important
+.slideFilt.inactive {
+	opacity: 0.25;
+	pointer-events: none
 }
+
 
 
 #mouseCoord {
@@ -80,3 +126,20 @@
 	font-family: 'Open Sans', sans-serif;
 	background-color: rgba(0, 0, 0, 0.3);
 }
+
+
+
+/*fault legend*/
+
+.faultShape {
+	left: -50px;
+	height: 50px;
+	width: 100px;
+	color: hsla(338, 95%, 52%, 0.68);
+	border-bottom: 2px;
+	border-left: 2px solid red;
+	-moz-transform: skew(45deg);
+	/*-webkit-transform: skew(45deg);*/
+	transform: skew(45deg);
+}
+

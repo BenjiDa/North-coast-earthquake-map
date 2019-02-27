@@ -5,22 +5,21 @@
     <title>Northern California Earthquakes</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
-
+    
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css" type="text/css">
+    <link href="https://api.mapbox.com/mapbox-assembly/v0.23.1/assembly.min.css" rel="stylesheet">
+    <link href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+    <link href="./style/site.css" rel="stylesheet" type="text/css">
+    <!-- 
+ -->
 
     <!-- <link href='./style.css' rel='stylesheet' /> -->
 
   <!--   <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js"></script>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css" type="text/css"> -->
-    <link href="https://api.mapbox.com/mapbox-assembly/v0.23.1/assembly.min.css" rel="stylesheet">
-    <script async="" defer="" src="https://api.mapbox.com/mapbox-assembly/v0.23.1/assembly.js"></script>
-
     
+  
     <style>
         
     </style>
@@ -49,11 +48,12 @@
       <div class="flex-child flex-child--grow px12 py12 scroll-auto">
 
         <div class="wfLogo">
-            <a href="../" target="_blank"><img class="fr" src="https://upload.wikimedia.org/wikipedia/commons/1/1c/USGS_logo_green.svg" style="max-width: 72px;"></a>
-        </div>
+            <a href="../" target="_blank"><img class="fr" src="./assets/usgsLogo.svg" style="max-width: 72px;"></a></div>
+    
         <div class="align-center wmax300-ml logos">
-            <a href="https://www.usgs.gov/" target="_blank"><img class="mt12 fl" src="https://upload.wikimedia.org/wikipedia/commons/1/1c/USGS_logo_green.svg"></a> <!-- assets/images/usgsLogo.svg -->
+            <a href="https://www.usgs.gov/" target="_blank"><img class="mt30" src="./assets/usgsLogo.svg" style="width: 200px;"></a> <!-- assets/images/usgsLogo.svg -->
         </div>
+        <br>
 
         <h2 class="txt-l txt-bold mb6 mt6" style="font-size: 20px; letter-spacing: -1px;">Northern California earthquakes (1984 - 2018)</h2>
 
@@ -61,10 +61,12 @@
           <strong class="txt-bold">Data Sources:</strong> <a class="link link--blue-light" target="_blank" href="https://www.ldeo.columbia.edu/research/seismology-geology-tectonophysics/real-time-double-difference-earthquake-locations-northern">DDEQ Catalog</a>, <a class="link link--blue-light" target="_blank" href="https://earthquake.usgs.gov/hazards/qfaults/">Quaternary faults</a>
         </p>
 
+
+
         <div id="rangeFilt" class="py6 round-bl round-br slideFilt active">
 
-          <label class="checkbox-container txt-s mt6 ml3" title="Remove turbines with no selected attribute data">
-              <input type="checkbox" id="model-check" value="model" checked="checked" autocomplete="off">
+          <label class="checkbox-container txt-s mt6 ml3" title="">
+              <input type="checkbox" id="model-check" value="model" autocomplete="off">
 
               <div class="checkbox mr6 checkbox--s-label checkbox--red-faint">
                 <svg class="icon bigCheck">
@@ -77,11 +79,14 @@
           </label>
           <br>
 
-          <div id="slider-range" class="ui-slider mt12 mb6 ui-slider-horizontal ui-widget ui-widget-content ui-draggable ui-draggable-handle">
-            <div class="ui-slider-range ui-corner-all ui-widget-header" style="left: 0%; width: 100%;">
+          <div id="eqSlider" class="ui-slider mt12 mb6 ui-slider-horizontal ui-widget ui-widget-content ui-draggable ui-draggable-handle">
+            <div class="ui-slider-range ui-corner-all ui-widget-header" ><!--style="left: 0%; width: 100%;" background: rgba(224, 224, 224, 0.1) -->
             </div>
             <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%;">
-            </span> <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 100%;"></span>
+            </span> 
+            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 100%;">
+            </span>
+
           </div>
 
           <div class="grid txt-bold txt-s mx6 mt3">
@@ -92,30 +97,35 @@
         </div>
 
 
-       <!--  <div id='current-date'></div>
-        <label id='slider-date'></label> -->
-          <!-- <div class="sliders_step1">
-            <div id="slider-range"></div>
-          </div>
-        </div> -->
-
-       <!--  <div id="time-range"> -->
-            <!-- <p>Time Range: 
-              <span class="slider-time"></span> to <span id="slider-time2"></span>
-            </p> -->
-            <!-- <div class="sliders_step1">
-                <div id="slider-range"></div>
-            </div> -->
-        <!-- </div> -->
-
         <h2 class="txt-l txt-bold mb6 mt6" style="font-size: 16px; letter-spacing: -1px;">Earthquake depth (km)</h2>
-        <div class="active h6 mt6" id="legend-gradient" style="background: linear-gradient(90deg,#66ffff,#0000cc);">
+        <div class="active h6 mt6" id="legend-gradient" style="background: linear-gradient(90deg,#66ffff,#0000cc);"></div>
+        <div class="grid txt-s txt-bold active mt3">
+            <div id="symbol-low" class="col flex-child--grow active">0 km</div>
+            <div id="symbol-high" class="col flex-child--grow align-r active">&gt;29 km</div>
         </div>
 
-          <div class="grid txt-s txt-bold active mt3">
-              <div id="symbol-low" class="col flex-child--grow active">0 km</div>
-              <div id="symbol-high" class="col flex-child--grow align-r active">&gt;29 km</div>
-          </div>
+
+        <h2 class="txt-l txt-bold mb6 mt6" style="font-size: 16px; letter-spacing: -1px;">Quaternary faults</h2>
+       <!--  <div class="faultShape"></div> -->
+        <svg height="50" width="50">
+          <line x1="0" y1="0" x2="100" y2="100" style="stroke:hsla(338, 95%, 52%, 0.68);stroke-width:2" />
+        </svg>
+       <!--  <svg height="50" width="50">
+          <line x1="0" y1="0" x2="100" y2="100" style="stroke:hsla(338, 95%, 52%, 0.68);stroke-width:1.8" />
+        </svg>
+        <svg height="50" width="50">
+          <line x1="0" y1="0" x2="100" y2="100" style="stroke:hsla(338, 95%, 52%, 0.68);stroke-width:1.4" />
+        </svg>
+        <svg height="50" width="50">
+          <line x1="0" y1="0" x2="100" y2="100" style="stroke:hsla(338, 95%, 52%, 0.68);stroke-width:1.2" />
+        </svg>
+        <svg height="50" width="50">
+          <line x1="0" y1="0" x2="100" y2="100" style="stroke:hsla(338, 95%, 52%, 0.68);stroke-width:1" />
+        </svg> -->
+        <svg height="50" width="50">
+          <line x1="0" y1="0" x2="100" y2="100" style="stroke:hsla(338, 95%, 52%, 0.68);stroke-width:0.6" />
+        </svg>
+
       
     </div>
   </div>
@@ -142,9 +152,13 @@
 </div> -->
 
 
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
+<script async="" defer="" src="https://api.mapbox.com/mapbox-assembly/v0.23.1/assembly.js"></script>
 
-<link href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
-<link href="./style/site.css" rel="stylesheet" type="text/css">
+
 <script src="./scripts/eq_map.js"></script>
 
 
