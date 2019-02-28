@@ -65,18 +65,7 @@
 
         <div id="rangeFilt" class="py6 round-bl round-br slideFilt active">
 
-          <label class="checkbox-container txt-s mt6 ml3" title="">
-              <input type="checkbox" id="model-check" value="model" autocomplete="off">
-
-              <div class="checkbox mr6 checkbox--s-label checkbox--red-faint">
-                <svg class="icon bigCheck">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-check">
-                  </use>
-                </svg>
-              </div>
-              <span>Exclude earthquakes < 3 Mw (<span id="misCount" class="txt-bold">0</span> here)
-              </span>
-          </label>
+          
           <br>
 
           <div id="eqSlider" class="ui-slider mt12 mb6 ui-slider-horizontal ui-widget ui-widget-content ui-draggable ui-draggable-handle">
@@ -94,6 +83,21 @@
               <div id="range-high" class="slider-time2 col flex-child--grow align-r">2018</div>
           </div>
 
+          <br>
+
+          <label class="checkbox-container txt-s mt6 ml3" title="">
+              <input type="checkbox" id="model-check" value="model" autocomplete="off">
+
+              <div class="checkbox mr6 checkbox--s-label checkbox--red-faint">
+                <svg class="icon bigCheck">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-check">
+                  </use>
+                </svg>
+              </div>
+              <span>Exclude earthquakes < 3 Mw (<span id="misCount" class="txt-bold">0</span> here)
+              </span>
+          </label>
+
         </div>
 
 
@@ -105,26 +109,20 @@
         </div>
 
 
-        <h2 class="txt-l txt-bold mb6 mt6" style="font-size: 16px; letter-spacing: -1px;">Quaternary faults</h2>
-       <!--  <div class="faultShape"></div> -->
+      <h2 class="txt-l txt-bold mb6 mt6" style="font-size: 16px; letter-spacing: -1px;">Quaternary faults</h2>
+       <div class="flex-parent pt6 round-tl round-tr">
         <svg height="50" width="50">
           <line x1="0" y1="0" x2="100" y2="100" style="stroke:hsla(338, 95%, 52%, 0.68);stroke-width:2" />
         </svg>
-       <!--  <svg height="50" width="50">
-          <line x1="0" y1="0" x2="100" y2="100" style="stroke:hsla(338, 95%, 52%, 0.68);stroke-width:1.8" />
-        </svg>
-        <svg height="50" width="50">
-          <line x1="0" y1="0" x2="100" y2="100" style="stroke:hsla(338, 95%, 52%, 0.68);stroke-width:1.4" />
-        </svg>
-        <svg height="50" width="50">
-          <line x1="0" y1="0" x2="100" y2="100" style="stroke:hsla(338, 95%, 52%, 0.68);stroke-width:1.2" />
-        </svg>
-        <svg height="50" width="50">
-          <line x1="0" y1="0" x2="100" y2="100" style="stroke:hsla(338, 95%, 52%, 0.68);stroke-width:1" />
-        </svg> -->
+          <br>
+          <p class='txt-s mx12'>Historic to latest Quaternary</p>
+
+
         <svg height="50" width="50">
           <line x1="0" y1="0" x2="100" y2="100" style="stroke:hsla(338, 95%, 52%, 0.68);stroke-width:0.6" />
         </svg>
+          <p class='txt-s mx12'>Late to middle Quaternary</p>
+        </div>
 
       
     </div>

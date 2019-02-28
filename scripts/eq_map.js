@@ -83,7 +83,7 @@ map.on('style.load', function() {
           "undifferentiated Quaternary",
           "hsla(338, 95%, 52%, 0.42)",
           "historic",
-          "hsl(338, 95%, 52%)",
+          "hsla(338, 95%, 52%, 1)",
           "middle and late Quaternary",
           "hsla(338, 95%, 52%, 0.57)",
           "Class B",
@@ -167,15 +167,6 @@ map.on('style.load', function() {
           popup.remove();
         });
 
-    
-
-    
-
-
-    
-
-
-
 
     // Set filter to first date value 
 function filterBy(startDate, endDate) {
@@ -210,6 +201,7 @@ function zeroPad(num, places) {
   var zero = places - num.toString().length + 1;
   return Array(+(zero > 0 && zero)).join("0") + num;
 }
+
 function formatDT(__dt) {
     var year = __dt.getFullYear();
     var month = zeroPad(__dt.getMonth()+1, 2);
